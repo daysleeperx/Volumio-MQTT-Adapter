@@ -14,6 +14,7 @@ CLIENT_ID = f'volumio-mqtt-{secrets.token_hex(16)}'
 DEVICE = config["MQTT"]["device"]
 MQTT_BROKER = config['MQTT']['broker']
 MQTT_TOPIC = f'{config["MQTT"]["device"]}/#'
+VOLUMIO_HOST = f'{config["VOLUMIO"]["host"]}'
 
 
 def connect_mqtt() -> mqtt.Client:
@@ -84,6 +85,7 @@ if __name__ == '__main__':
 
     log(f'Connecting to Volumio Player...')
     sio = socketio.Client()
+    sio.connect(VOLUMIO_HOST)
 
     subscribe(client, sio)
     client.loop_forever()

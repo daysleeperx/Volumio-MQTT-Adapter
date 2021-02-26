@@ -1,7 +1,7 @@
 bidict==0.21.2
 certifi==2020.12.5
 chardet==4.0.0
-idna==3.1
+idna==2.10
 paho-mqtt==1.5.1
 python-engineio==4.0.0
 python-socketio==5.0.4

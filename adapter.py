@@ -1,14 +1,14 @@
+import configparser
 import secrets
 from datetime import datetime
 
 import paho.mqtt.client as mqtt
 import socketio
-import yaml
 
-with open("config.yml", "r") as ymlfile:
-    config = yaml.load(ymlfile)
+config = configparser.ConfigParser()
+config.read("config.ini")
 
-debug = config.get('app', 'debug')
+debug = config.getboolean('app', 'debug')
 
 CLIENT_ID = f'volumio-mqtt-{secrets.token_hex(16)}'
 DEVICE = config.get('mqtt', 'device')

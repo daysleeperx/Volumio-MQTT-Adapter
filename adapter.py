@@ -84,7 +84,7 @@ if __name__ == '__main__':
     client = connect_mqtt()
 
     log(f'Connecting to Volumio Player...')
-    sio = socketio.Client()
+    sio = socketio.Client(logger=debug)
     sio.connect(VOLUMIO_HOST)
 
     subscribe(client, sio)

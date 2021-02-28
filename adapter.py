@@ -101,4 +101,3 @@ if __name__ == '__main__':
 
     subscribe(client, sio)
     client.loop_forever()
-

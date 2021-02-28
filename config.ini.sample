@@ -1,9 +1,0 @@
-[app]
-debug = false
-
-[volumio]
-host = http://localhost:3000
-
-[mqtt]
-broker = localhost
-device = volumio

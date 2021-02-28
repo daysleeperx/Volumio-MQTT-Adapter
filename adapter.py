@@ -1,3 +1,4 @@
+import os
 import configparser
 import secrets
 from datetime import datetime
@@ -5,7 +6,7 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 import socketio
 
-config = configparser.ConfigParser()
+config = configparser.ConfigParser(os.environ)
 config.read("config.ini")
 
 debug = config.getboolean('app', 'debug')

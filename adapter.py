@@ -72,9 +72,9 @@ def subscribe(client: mqtt.Client, socket: socketio.Client):
         if debug:
             log(f'Message received from MQTT topic {msg.topic}: {message}')
 
-        (_, action, command) = msg.topic.split('/')
-
         try:
+            (_, action, command) = msg.topic.split('/')
+
             options.get(action, lambda c, m: log(f'No such action: {action}'))(command, message)
         except Exception as e:
             log(f'Exception occurred while executing command: {e}')

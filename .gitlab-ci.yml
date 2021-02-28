@@ -7,8 +7,14 @@ deploy-rpi:
   stage: deploy
   script:
     - docker stop volumio_mqtt || true && docker rm volumio_mqtt || true
-    - docker run -d --network host --name volumio_mqtt --restart unless-stopped \
-      --env IS_DEBUG=$CI_DEBUG \
-      --env VOLUMIO_HOST=$CI_VOLUMIO_HOST \
-      --env MQTT_HOST=$CI_MQTT_HOST \
+    - >
+      docker run -d --network host --name volumio_mqtt --restart unless-stopped
+      --env IS_DEBUG=$CI_DEBUG
+      --env VOLUMIO_HOST=$CI_VOLUMIO_HOST
+      --env MQTT_HOST=$CI_MQTT_HOST
       --env MQTT_DEVICE=$CI_DEVICE volumio-mqtt-docker
+
+remove-untagged-images:
+  stage: cleanup
+  script:
+    - docker image prune --filter="dangling=true" --force

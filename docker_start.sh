@@ -7,4 +7,4 @@ docker run -d --network host --name volumio_mqtt --restart unless-stopped \
         --env IS_DEBUG=$CI_DEBUG \
         --env VOLUMIO_HOST=$CI_VOLUMIO_HOST \
         --env MQTT_HOST=$CI_MQTT_HOST \
-        --env MQTT_DEVICE=$CI_DEVICE \ volumio-mqtt-docker
+        --env MQTT_DEVICE=$CI_DEVICE volumio-mqtt-docker

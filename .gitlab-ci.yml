@@ -15,6 +15,6 @@ deploy-rpi:
       --env MQTT_DEVICE=$CI_DEVICE volumio-mqtt-docker
 
 remove-untagged-images:
-  stage: cleanup
+  stage: .post
   script:
     - docker image prune --filter="dangling=true" --force

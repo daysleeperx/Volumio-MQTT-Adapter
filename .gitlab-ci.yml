@@ -7,13 +7,11 @@ test-job1:
   stage: test
   script:
     - hostname -I
-    - ifconfig
     - echo "This job tests something"
 
 test-job2:
   stage: test
   script:
-    - ifconfig
     - echo "This job tests something, but takes more time than test-job1."
     - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
     - echo "which simulates a test that runs 20 seconds longer than test-job1"
@@ -22,5 +20,6 @@ test-job2:
 deploy-prod:
   stage: deploy
   script:
-    - ifconfig
+    - pwd
+    - ./docker_start.sh
     - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."

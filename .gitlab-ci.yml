@@ -20,7 +20,7 @@ test-job2:
 deploy-prod:
   stage: deploy
   script:
-    - echo $CI_MQTT_HOST
+    - echo $CI_VOLUMIO_HOST
     - chmod +x docker_start.sh
     - ./docker_start.sh
     - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."

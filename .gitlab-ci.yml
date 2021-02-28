@@ -21,5 +21,6 @@ deploy-prod:
   stage: deploy
   script:
     - pwd
+    - chmod +x docker_start.sh
     - ./docker_start.sh
     - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."

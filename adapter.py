@@ -1,6 +1,7 @@
 import os
 import configparser
 import secrets
+import json
 from datetime import datetime
 
 import paho.mqtt.client as mqtt
@@ -42,6 +43,10 @@ def subscribe(client: mqtt.Client, socket: socketio.Client):
     def disconnect():
         log(f'Connected to Volumio player: {DEVICE}')
 
+    @socket.on('pushState')
+    def push_state(data):
+        client.publish(f'{DEVICE}/state/pushState', json.dumps(data, indent=4))
+
     volume_options = {
         'percent': lambda msg: socket.emit('volume', int(msg)),
         'push': lambda msg: socket.emit('volume', msg),
@@ -61,11 +66,17 @@ def subscribe(client: mqtt.Client, socket: socketio.Client):
             socket.emit('play' if msg == 'true' else 'stop')
     }
 
+    state_options = {
+        'getState': lambda _: socket.emit('getState')
+    }
+
     options = {
         'playback': lambda cmd, _:
             playback_options.get(cmd, lambda _: log(f'No such cmd: {cmd}'))(_),
         'volume': lambda cmd, msg:
-            volume_options.get(cmd, lambda _: log(f'No such cmd: {cmd}'))(msg)
+            volume_options.get(cmd, lambda _: log(f'No such cmd: {cmd}'))(msg),
+        'state': lambda cmd, _:
+            state_options.get(cmd, lambda _: log(f'No such cmd: {cmd}'))(_)
     }
 
     def on_message(_, userdata, msg):

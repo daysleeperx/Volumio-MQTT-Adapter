@@ -15,6 +15,8 @@ debug = config.getboolean('app', 'debug')
 CLIENT_ID = f'volumio-mqtt-{secrets.token_hex(16)}'
 DEVICE = config.get('mqtt', 'device')
 MQTT_BROKER = config.get('mqtt', 'broker')
+MQTT_USERNAME = config.get('mqtt', 'username')
+MQTT_PASSWORD = config.get('mqtt', 'password')
 VOLUMIO_HOST = f'{config.get("volumio", "host")}'
 MQTT_TOPIC = f'{DEVICE}/#'
 
@@ -32,6 +34,7 @@ def connect_mqtt() -> mqtt.Client:
 
     mqtt_client = mqtt.Client(CLIENT_ID)
     mqtt_client.on_connect = on_connect
+    mqtt_client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
     mqtt_client.connect(MQTT_BROKER)
     return mqtt_client
 
@@ -71,7 +74,7 @@ def subscribe(client: mqtt.Client, socket: socketio.Client):
 
     state_options = {
         'getState': lambda _: socket.emit('getState'),
-        'pushState': lambda msg: player_state.update(json.loads(msg)) 
+        'pushState': lambda msg: player_state.update(json.loads(msg))
     }
 
     options = {

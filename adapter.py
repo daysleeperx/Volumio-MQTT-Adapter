@@ -18,6 +18,8 @@ MQTT_BROKER = config.get('mqtt', 'broker')
 VOLUMIO_HOST = f'{config.get("volumio", "host")}'
 MQTT_TOPIC = f'{DEVICE}/#'
 
+player_state = {}
+
 
 def connect_mqtt() -> mqtt.Client:
     def on_connect(client, userdata, flags, rc):
@@ -46,6 +48,7 @@ def subscribe(client: mqtt.Client, socket: socketio.Client):
     @socket.on('pushState')
     def push_state(data):
         client.publish(f'{DEVICE}/state/pushState', json.dumps(data, indent=4))
+        player_state.update(json.loads(data))
 
     volume_options = {
         'percent': lambda msg: socket.emit('volume', int(msg)),
@@ -61,7 +64,8 @@ def subscribe(client: mqtt.Client, socket: socketio.Client):
         'stop': lambda _: socket.emit('stop'),
         'pause': lambda _: socket.emit('pause'),
         'playPlaylist': lambda msg:
-            socket.emit('playPlaylist', {'name': msg}),
+            socket.emit('playPlaylist', {'name': msg})
+            if player_state['status'] != 'play' else log(f'{msg} already playing!'),
         'power': lambda msg:
             socket.emit('play' if msg == 'true' else 'stop')
     }

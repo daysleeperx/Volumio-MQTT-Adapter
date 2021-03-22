@@ -49,6 +49,7 @@ def subscribe(client: mqtt.Client, socket: socketio.Client):
     def push_state(data):
         client.publish(f'{DEVICE}/state/pushState', json.dumps(data, indent=4))
         player_state.update(json.loads(data))
+        log(f'Player state: {player_state}')
 
     volume_options = {
         'percent': lambda msg: socket.emit('volume', int(msg)),

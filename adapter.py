@@ -3,6 +3,7 @@ import configparser
 import secrets
 import json
 from datetime import datetime
+from collections import defaultdict
 
 import paho.mqtt.client as mqtt
 import socketio
@@ -20,7 +21,7 @@ MQTT_PASSWORD = config.get('mqtt', 'password')
 VOLUMIO_HOST = f'{config.get("volumio", "host")}'
 MQTT_TOPIC = f'{DEVICE}/#'
 
-player_state = {}
+player_state = defaultdict(lambda: '')
 
 
 def connect_mqtt() -> mqtt.Client:

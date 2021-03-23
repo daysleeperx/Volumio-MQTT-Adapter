@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  mosquitto_broker:
+    image: eclipse-mosquitto:1.6.12
+    container_name: mosquitto-broker
+    restart: unless-stopped
+    ports:
+      - 1883:1883
+    volumes:
+      - ./mosquitto:/mosquitto/
+

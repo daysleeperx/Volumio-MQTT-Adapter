@@ -1,4 +1,6 @@
 # Volumio MQTT Adapter :headphones:
+[![pipeline status](https://gitlab.cs.ttu.ee/vpavlo/iti0215_volumio_mqtt_adapter/badges/master/pipeline.svg)](https://gitlab.cs.ttu.ee/vpavlo/iti0215_volumio_mqtt_adapter/commits/master)
+
 Volumio MQTT adapter written in Python.
 
 Enables Volumio player control using MQTT messages. Example message, that plays a specific playlist 

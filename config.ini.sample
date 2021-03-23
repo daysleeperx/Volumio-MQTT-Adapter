@@ -1,0 +1,11 @@
+[app]
+debug = true
+
+[volumio]
+host = http://localhost:3000
+
+[mqtt]
+broker = 127.0.0.1
+device = volumio
+username = user
+password = test
